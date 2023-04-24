@@ -1,0 +1,19 @@
+Create Or Replace Function totalGames 
+Return number IS 
+   total number(2) := 0; 
+Begin 
+   Select count(*) into total
+   From Games; 
+    
+   Return total; 
+End; 
+
+
+//Calling Function
+
+Declare
+   a number(2); 
+Begin
+   a := totalGames(); 
+   dbms_output.put_line('Total of Games: ' || a); 
+End; 

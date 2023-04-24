@@ -1,0 +1,32 @@
+Create Or Replace TRIGGER num_of_rows
+Before INSERT ON special_offers
+FOR EACH ROW
+Declare
+  num_of_rows NUMBER;
+Begin
+  Select COUNT(*) INTO num_of_rows FROM special_offers;
+  dbms_output.put_line('Number of rows before insert in Special_Offers table: ' || num_of_rows);
+End;
+
+
+
+
+Create Or Replace TRIGGER NUM_OF_ROWS
+Before Insert ON special_offers
+FOR EACH ROW
+Declare
+  num_of_rows NUMBER;
+  PROM_NAME_LEN NUMBER;
+  PROM_NAME_EXC EXCEPTION;
+Begin
+  Select COUNT(*) INTO NUM_OF_ROWS FROM special_offers;
+  dbms_output.put_line('Number of rows before insert in special_offers table: ' || NUM_OF_ROWS);
+
+  PROM_NAME_LEN := LENGTH(:NEW.PROMOTION_NAME);
+  If PROM_NAME_LEN < 5 THEN
+    RAISE PROM_NAME_EXC;
+  End If;
+    EXCEPTION
+  When PROM_NAME_EXC THEN
+    RAISE_APPLICATION_ERROR(-20001, 'Promotion Name length should be greater than 5 characters.');
+End;
